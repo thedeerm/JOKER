@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سما</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <!-- السماء: طبقتان تتبادلان الظهور حتى يتغير اللون بنعومة -->
+  <div class="sky" id="skyA"></div>
+  <div class="sky" id="skyB"></div>
+  <canvas id="back"></canvas>
+
+  <!-- أفق بغداد ودجلة -->
+  <div id="horizon">
+    <svg id="skyline" viewBox="0 0 1920 260" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div id="river"><svg id="reflection" viewBox="0 0 1920 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+  </div>
+
+  <canvas id="front"></canvas>
+
+  <main id="ui">
+    <section id="timeCol">
+      <div class="place"><span class="dot"></span><span id="place"></span></div>
+      <div class="clock">
+        <span id="clock">--:--</span>
+        <span id="ampm"></span>
+      </div>
+      <div class="seconds"><i id="secBar"></i></div>
+      <div id="date" class="date"></div>
+      <div id="hijri" class="hijri"></div>
+      <div id="note" class="note"><span id="noteIcon" class="ico"></span><span id="noteText"></span></div>
+    </section>
+
+    <section id="card">
+      <header class="now">
+        <div class="nowMain">
+          <span id="temp" class="temp">--</span>
+          <div class="nowText">
+            <div id="cond" class="cond"></div>
+            <div id="feels" class="feels"></div>
+          </div>
+        </div>
+        <span id="nowIcon" class="ico big"></span>
+      </header>
+
+      <div id="hours" class="hours"></div>
+
+      <div class="sunRow">
+        <svg id="arc" viewBox="0 0 300 120" aria-hidden="true">
+          <defs>
+            <linearGradient id="arcFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffb36b" stop-opacity=".45"/>
+              <stop offset="1" stop-color="#ffb36b" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path id="arcPath" d="M20 108 A130 96 0 0 1 280 108" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1.5" stroke-dasharray="3 5"/>
+          <path id="arcDone" fill="url(#arcFill)"/>
+          <line x1="8" y1="108" x2="292" y2="108" stroke="rgba(255,255,255,.25)"/>
+          <circle id="arcSun" r="7" cx="20" cy="108" fill="#ffcf7a"/>
+        </svg>
+        <div class="sunText">
+          <div><small>الشروق</small><b id="sunrise">--</b></div>
+          <div><small>الغروب</small><b id="sunset">--</b></div>
+          <div><small>طول النهار</small><b id="daylen">--</b></div>
+        </div>
+      </div>
+
+      <div id="days" class="days"></div>
+
+      <div class="details">
+        <div><span class="ico" data-i="drop"></span><small>الرطوبة</small><b id="hum">--</b></div>
+        <div><span class="ico" id="windIco" data-i="arrow"></span><small>الرياح</small><b id="wind">--</b></div>
+        <div><span class="ico" data-i="uv"></span><small>الأشعة</small><b id="uv">--</b></div>
+        <div><span class="ico" data-i="air"></span><small>الهواء</small><b id="aqi">--</b></div>
+      </div>
+
+      <footer id="status" class="status"></footer>
+    </section>
+  </main>
+
+  <div id="hint" class="hint" hidden>◀ ▶ لتجربة حالات الطقس · زر الوسط للرجوع للطقس الحقيقي</div>
+</div>
+
+<script src="icons.js"></script>
+<script src="skyline.js"></script>
+<script src="sky.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

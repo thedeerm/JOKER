@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'iq.joker.sama'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'iq.joker.sama'
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // مفتاح توقيع ثابت حتى التحديثات تتنصب فوق النسخة القديمة.
+    // هذا تطبيق شخصي للتنصيب اليدوي، مو للنشر على المتجر.
+    signingConfigs {
+        sama {
+            storeFile file('sama.keystore')
+            storePassword 'samasama'
+            keyAlias 'sama'
+            keyPassword 'samasama'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.sama
+        }
+        debug {
+            signingConfig signingConfigs.sama
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}

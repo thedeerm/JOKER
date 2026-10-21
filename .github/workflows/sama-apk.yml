@@ -1,0 +1,53 @@
+name: Sama TV screensaver APK
+
+on:
+  push:
+    paths:
+      - 'sama-tv/**'
+      - '.github/workflows/sama-apk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sama-apk
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sama-tv
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk sama.apk
+          ls -la sama.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sama-apk
+          path: sama-tv/sama.apk
+
+      - name: Publish download link (release "sama-latest")
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete sama-latest --yes --cleanup-tag || true
+          gh release create sama-latest sama.apk \
+            --target "${GITHUB_SHA}" \
+            --title "سما · شاشة توقف ساعة وطقس" \
+            --notes "آخر نسخة من شاشة التوقف سما. نزّل sama.apk ونصّبه على الشاشة. (commit ${GITHUB_SHA::7})"
